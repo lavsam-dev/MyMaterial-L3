@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.chip.Chip
 import com.learn.lavsam.mymaterial.R
-import kotlinx.android.synthetic.main.fragment_chips.*
+import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : Fragment() {
 
@@ -16,7 +16,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_chips, container, false)
+        return inflater.inflate(R.layout.fragment_settings, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
