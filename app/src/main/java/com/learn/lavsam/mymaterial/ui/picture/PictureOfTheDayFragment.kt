@@ -17,6 +17,7 @@ import com.google.android.material.chip.Chip
 import com.learn.lavsam.mymaterial.R
 import com.learn.lavsam.mymaterial.ui.MainActivity
 import com.learn.lavsam.mymaterial.ui.api.NasaApiActivity
+import com.learn.lavsam.mymaterial.ui.apibottom.NasaApiBottomActivity
 import com.learn.lavsam.mymaterial.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -87,10 +88,13 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.app_bar_fav -> {
+            R.id.app_bar_theme -> {
                 requireActivity().setTheme(R.style.MyAppTheme_Indigo)
                 requireActivity().recreate()
-                toast("Favourite")
+            }
+            R.id.app_bar_fav -> activity?.let {
+                startActivity(Intent(it, NasaApiBottomActivity::class.java))
+//                toast("Favourite")
             }
             R.id.app_bar_settings -> activity?.supportFragmentManager?.beginTransaction()
                 ?.add(R.id.container, SettingsFragment())?.addToBackStack(null)?.commit()

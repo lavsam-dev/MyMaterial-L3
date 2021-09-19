@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_my_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyAppTheme">
-        <activity android:name=".ui.api.NasaApiActivity"></activity>
+        <activity android:name=".ui.apibottom.NasaApiBottomActivity"></activity>
+        <activity android:name=".ui.api.NasaApiActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
