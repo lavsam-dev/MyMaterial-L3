@@ -16,8 +16,15 @@ import com.learn.lavsam.mymaterial.ui.picture.PictureOfTheDayViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
 import kotlinx.android.synthetic.main.fragment_earth.*
 import kotlinx.android.synthetic.main.main_fragment.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EarthFragment : Fragment() {
+
+    private val nasaDate: Calendar = Calendar.getInstance()
+    private val sdf: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+    private var apiDate: String = ""
 
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProviders.of(this).get(PictureOfTheDayViewModel::class.java)
@@ -25,7 +32,12 @@ class EarthFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.getData("")
+
+        val rnds = (30..2000).random()
+        nasaDate.add(Calendar.DATE, -rnds)
+        apiDate = sdf.format(nasaDate.time)
+//        toast(apiDate)
+        viewModel.getData(apiDate)
             .observe(this@EarthFragment, Observer<PictureOfTheDayData> { renderData(it) })
     }
 
@@ -41,9 +53,9 @@ class EarthFragment : Fragment() {
             is PictureOfTheDayData.Success -> {
                 val serverResponseData = data.serverResponseData
                 val url = serverResponseData.url
-//                text_description.text = serverResponseData.explanation
                 bottom_sheet_description.text = serverResponseData.explanation
                 bottom_sheet_description_header.text = serverResponseData.title
+                bottom_sheet_description_date.text = apiDate
 
                 if (url.isNullOrEmpty()) {
                     //showError("Сообщение, что ссылка пустая")

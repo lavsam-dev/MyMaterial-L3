@@ -31,6 +31,7 @@ class PictureOfTheDayFragment : Fragment() {
     private val nasaDate: Calendar = Calendar.getInstance()
     private var nasaDateCalc: Calendar = nasaDate.clone() as Calendar
     private val sdf: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+    private var apiDate: String = sdf.format(nasaDateCalc.time)
 
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProviders.of(this).get(PictureOfTheDayViewModel::class.java)
@@ -70,7 +71,7 @@ class PictureOfTheDayFragment : Fragment() {
                         nasaDateCalc.add(Calendar.DATE, -1)
                     }
                 }
-                val apiDate = sdf.format(nasaDateCalc.time)
+                apiDate = sdf.format(nasaDateCalc.time)
 //                val apiDateNasa = sdf.format(nasaDate.time)
 //                Toast.makeText(context, "Выбран ${it.text} Дата ${apiDate} Nasa ${apiDateNasa}", Toast.LENGTH_SHORT).show()
                 viewModel.getData(apiDate)
@@ -119,6 +120,7 @@ class PictureOfTheDayFragment : Fragment() {
                 text_description.text = serverResponseData.explanation
                 bottom_sheet_description.text = serverResponseData.explanation
                 bottom_sheet_description_header.text = serverResponseData.title
+                bottom_sheet_description_date.text = apiDate
                 if (url.isNullOrEmpty()) {
                     //showError("Сообщение, что ссылка пустая")
                     toast("Link is empty")
