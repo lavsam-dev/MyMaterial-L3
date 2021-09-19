@@ -1,4 +1,4 @@
-package com.learn.lavsam.mymaterial.ui.chips
+package com.learn.lavsam.mymaterial.ui.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.google.android.material.chip.Chip
 import com.learn.lavsam.mymaterial.R
 import kotlinx.android.synthetic.main.fragment_chips.*
 
-class ChipsFragment : Fragment() {
+class SettingsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

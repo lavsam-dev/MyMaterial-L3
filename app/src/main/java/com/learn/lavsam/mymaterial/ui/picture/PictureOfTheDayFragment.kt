@@ -16,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.learn.lavsam.mymaterial.R
 import com.learn.lavsam.mymaterial.ui.MainActivity
-import com.learn.lavsam.mymaterial.ui.chips.ChipsFragment
+import com.learn.lavsam.mymaterial.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.text.DateFormat
@@ -86,7 +86,7 @@ class PictureOfTheDayFragment : Fragment() {
                 toast("Favourite")
             }
             R.id.app_bar_settings -> activity?.supportFragmentManager?.beginTransaction()
-                ?.add(R.id.container, ChipsFragment())?.addToBackStack(null)?.commit()
+                ?.add(R.id.container, SettingsFragment())?.addToBackStack(null)?.commit()
             android.R.id.home -> {
                 activity?.let {
                     BottomNavigationDrawerFragment().show(it.supportFragmentManager, "tag")
