@@ -16,7 +16,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.learn.lavsam.mymaterial.R
 import com.learn.lavsam.mymaterial.ui.MainActivity
-import com.learn.lavsam.mymaterial.ui.chips.ChipsFragment
+import com.learn.lavsam.mymaterial.ui.api.NasaApiActivity
+import com.learn.lavsam.mymaterial.ui.apibottom.NasaApiBottomActivity
+import com.learn.lavsam.mymaterial.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.text.DateFormat
@@ -29,6 +31,7 @@ class PictureOfTheDayFragment : Fragment() {
     private val nasaDate: Calendar = Calendar.getInstance()
     private var nasaDateCalc: Calendar = nasaDate.clone() as Calendar
     private val sdf: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+    private var apiDate: String = sdf.format(nasaDateCalc.time)
 
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProviders.of(this).get(PictureOfTheDayViewModel::class.java)
@@ -61,14 +64,20 @@ class PictureOfTheDayFragment : Fragment() {
             chipGroupMain.findViewById<Chip>(position)?.let {
                 nasaDateCalc = nasaDate.clone() as Calendar;
                 when (position) {
-                    1 -> { nasaDateCalc.add(Calendar.DATE, -2) }
-                    2 -> { nasaDateCalc.add(Calendar.DATE, -1) }
+                    1 -> {
+                        nasaDateCalc.add(Calendar.DATE, -2)
+                    }
+                    2 -> {
+                        nasaDateCalc.add(Calendar.DATE, -1)
+                    }
                 }
-                val apiDate = sdf.format(nasaDateCalc.time)
+                apiDate = sdf.format(nasaDateCalc.time)
 //                val apiDateNasa = sdf.format(nasaDate.time)
 //                Toast.makeText(context, "Выбран ${it.text} Дата ${apiDate} Nasa ${apiDateNasa}", Toast.LENGTH_SHORT).show()
                 viewModel.getData(apiDate)
-                    .observe(this@PictureOfTheDayFragment, Observer<PictureOfTheDayData> { renderData(it) })
+                    .observe(
+                        this@PictureOfTheDayFragment,
+                        Observer<PictureOfTheDayData> { renderData(it) })
             }
         }
     }
@@ -80,17 +89,24 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.app_bar_fav -> {
+            R.id.app_bar_theme -> {
                 requireActivity().setTheme(R.style.MyAppTheme_Indigo)
                 requireActivity().recreate()
-                toast("Favourite")
+            }
+            R.id.app_bar_fav -> activity?.let {
+                startActivity(Intent(it, NasaApiBottomActivity::class.java))
+//                toast("Favourite")
             }
             R.id.app_bar_settings -> activity?.supportFragmentManager?.beginTransaction()
-                ?.add(R.id.container, ChipsFragment())?.addToBackStack(null)?.commit()
+                ?.add(R.id.container, SettingsFragment())?.addToBackStack(null)?.commit()
             android.R.id.home -> {
                 activity?.let {
                     BottomNavigationDrawerFragment().show(it.supportFragmentManager, "tag")
                 }
+            }
+            R.id.app_bar_api -> activity?.let {
+                startActivity(Intent(it, NasaApiActivity::class.java))
+//                startActivity(Intent(it, ApiActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)
@@ -104,6 +120,7 @@ class PictureOfTheDayFragment : Fragment() {
                 text_description.text = serverResponseData.explanation
                 bottom_sheet_description.text = serverResponseData.explanation
                 bottom_sheet_description_header.text = serverResponseData.title
+                bottom_sheet_description_date.text = apiDate
                 if (url.isNullOrEmpty()) {
                     //showError("Сообщение, что ссылка пустая")
                     toast("Link is empty")
