@@ -1,0 +1,2 @@
+rootProject.name = "MyMaterial-L3"
+include ':app'
