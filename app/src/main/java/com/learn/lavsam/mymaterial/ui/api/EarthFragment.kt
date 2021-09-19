@@ -13,7 +13,9 @@ import coil.api.load
 import com.learn.lavsam.mymaterial.R
 import com.learn.lavsam.mymaterial.ui.picture.PictureOfTheDayData
 import com.learn.lavsam.mymaterial.ui.picture.PictureOfTheDayViewModel
+import kotlinx.android.synthetic.main.bottom_sheet_layout.*
 import kotlinx.android.synthetic.main.fragment_earth.*
+import kotlinx.android.synthetic.main.main_fragment.*
 
 class EarthFragment : Fragment() {
 
@@ -39,6 +41,10 @@ class EarthFragment : Fragment() {
             is PictureOfTheDayData.Success -> {
                 val serverResponseData = data.serverResponseData
                 val url = serverResponseData.url
+//                text_description.text = serverResponseData.explanation
+                bottom_sheet_description.text = serverResponseData.explanation
+                bottom_sheet_description_header.text = serverResponseData.title
+
                 if (url.isNullOrEmpty()) {
                     //showError("Сообщение, что ссылка пустая")
                     toast("Link is empty")

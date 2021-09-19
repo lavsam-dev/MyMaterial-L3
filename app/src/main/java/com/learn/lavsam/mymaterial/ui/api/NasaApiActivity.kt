@@ -1,23 +1,23 @@
 package com.learn.lavsam.mymaterial.ui.api
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.learn.lavsam.mymaterial.R
-import kotlinx.android.synthetic.main.activity_api.*
+import kotlinx.android.synthetic.main.activity_nasa_api.*
 
 private const val EARTH = 0
 private const val MARS = 1
 private const val WEATHER = 2
 
-class ApiActivity : AppCompatActivity() {
+class NasaApiActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_api)
+        setContentView(R.layout.activity_nasa_api)
         view_pager.adapter = ViewPagerAdapter(supportFragmentManager)
         dots_indicator.setViewPager(view_pager)
         tab_layout.setupWithViewPager(view_pager)
@@ -39,8 +39,9 @@ class ApiActivity : AppCompatActivity() {
         })
     }
 
+
     private fun setHighlightedTab(position: Int) {
-        val layoutInflater = LayoutInflater.from(this@ApiActivity)
+        val layoutInflater = LayoutInflater.from(this@NasaApiActivity)
 
         tab_layout.getTabAt(EARTH)?.customView = null
         tab_layout.getTabAt(MARS)?.customView = null
@@ -68,7 +69,7 @@ class ApiActivity : AppCompatActivity() {
         earth.findViewById<AppCompatTextView>(R.id.tab_image_textview)
             .setTextColor(
                 ContextCompat.getColor(
-                    this@ApiActivity,
+                    this@NasaApiActivity,
                     R.color.colorAccent
                 )
             )
@@ -85,7 +86,7 @@ class ApiActivity : AppCompatActivity() {
         mars.findViewById<AppCompatTextView>(R.id.tab_image_textview)
             .setTextColor(
                 ContextCompat.getColor(
-                    this@ApiActivity,
+                    this@NasaApiActivity,
                     R.color.colorAccent
                 )
             )
@@ -102,7 +103,7 @@ class ApiActivity : AppCompatActivity() {
         weather.findViewById<AppCompatTextView>(R.id.tab_image_textview)
             .setTextColor(
                 ContextCompat.getColor(
-                    this@ApiActivity,
+                    this@NasaApiActivity,
                     R.color.colorAccent
                 )
             )

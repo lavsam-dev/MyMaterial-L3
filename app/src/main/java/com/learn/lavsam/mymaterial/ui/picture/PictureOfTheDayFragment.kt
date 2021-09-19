@@ -16,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.learn.lavsam.mymaterial.R
 import com.learn.lavsam.mymaterial.ui.MainActivity
+import com.learn.lavsam.mymaterial.ui.api.NasaApiActivity
 import com.learn.lavsam.mymaterial.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -61,14 +62,20 @@ class PictureOfTheDayFragment : Fragment() {
             chipGroupMain.findViewById<Chip>(position)?.let {
                 nasaDateCalc = nasaDate.clone() as Calendar;
                 when (position) {
-                    1 -> { nasaDateCalc.add(Calendar.DATE, -2) }
-                    2 -> { nasaDateCalc.add(Calendar.DATE, -1) }
+                    1 -> {
+                        nasaDateCalc.add(Calendar.DATE, -2)
+                    }
+                    2 -> {
+                        nasaDateCalc.add(Calendar.DATE, -1)
+                    }
                 }
                 val apiDate = sdf.format(nasaDateCalc.time)
 //                val apiDateNasa = sdf.format(nasaDate.time)
 //                Toast.makeText(context, "Выбран ${it.text} Дата ${apiDate} Nasa ${apiDateNasa}", Toast.LENGTH_SHORT).show()
                 viewModel.getData(apiDate)
-                    .observe(this@PictureOfTheDayFragment, Observer<PictureOfTheDayData> { renderData(it) })
+                    .observe(
+                        this@PictureOfTheDayFragment,
+                        Observer<PictureOfTheDayData> { renderData(it) })
             }
         }
     }
@@ -91,6 +98,10 @@ class PictureOfTheDayFragment : Fragment() {
                 activity?.let {
                     BottomNavigationDrawerFragment().show(it.supportFragmentManager, "tag")
                 }
+            }
+            R.id.app_bar_api -> activity?.let {
+                startActivity(Intent(it, NasaApiActivity::class.java))
+//                startActivity(Intent(it, ApiActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)
